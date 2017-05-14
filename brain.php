@@ -5,29 +5,61 @@
 
   $input = $_POST["input"];
 
+  function regularResponse($message) {
+    return function($value) {
+      echo $message;
+    };
+  }
+
   $functionKeys = array(
-    "weather" => tellWeather(),
-    "what is" => lookUp($input),
-    "define" => defineWord($input),
-    "Hello" => "Top of the morning to ya",
-    "today's date" => function(){
-      return "Today is " . date("l jS \of F Y");
+    "weather" => function ($input) {
+        echo tellWeather();
+    },
+    "what is" => function ($in) {
+      echo lookUp($in);
     },
 
-    "what time is it" => function(){
-      return "The time is " . date("h:i A");
+    "define" => function ($input) {
+      echo defineWord($input);
     },
 
-    "are you married" => "I am if you want me to be",
-    "can you feel" => "I am a form of Artifical Intellegence so NO", "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
-    "who is your father" => "Hey no need to judge"
+    "Hello" => function ($value) {
+      echo "Top of the morning to ya";
+    },
+
+    "today's date" => function ($value) {
+      echo "Today is " . date("l jS \of F Y");
+    },
+
+    "what time is it" => function($value){
+      echo "The time is " . date("h:i A");
+    },
+
+    "are you married" => function ($value) {
+      echo "I am if you want me to be";
+    },
+
+    "can you feel" => function ($value) {
+      echo "I am a form of Artifical Intellegence so NO";
+    },
+    "what's your life story" => function ($value) {
+      echo "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)";
+    },
+
+    "who is your father" => function ($value) {
+      echo "Hey no need to judge";
+    }
+
   );
 
-  foreach($functionKeys as $key){
+
+
+  foreach($functionKeys as $key => $value){
     if(strpos($input, $key) !== false){
-      $functionKeys[$key];
+      $functionKeys[$key]($input);
     }
-  }
+  };
+
 
   function tellWeather(){
       $jsonurl = "http://api.openweathermap.org/data/2.5/weather?zip=63146&units=metric&APPID=ce0de60baf27ac825921e85bc1d23a9a";
