@@ -15,7 +15,8 @@
     },
 
     "what time is it" => function(){
-      return "The time is " . date("h:i A");},
+      return "The time is " . date("h:i A");
+    },
 
     "are you married" => "I am if you want me to be",
     "can you feel" => "I am a form of Artifical Intellegence so NO", "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
