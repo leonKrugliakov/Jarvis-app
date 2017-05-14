@@ -6,9 +6,11 @@
   $input = $_POST["input"];
 
   function regularResponse($message) {
-    return function($value) {
+
+    return function($value) use ($message) {
       echo $message;
     };
+
   }
 
   $functionKeys = array(
@@ -23,9 +25,7 @@
       echo defineWord($input);
     },
 
-    "Hello" => function ($value) {
-      echo "Top of the morning to ya";
-    },
+    "Hello" => regularResponse("Top of the morning to ya"),
 
     "today's date" => function ($value) {
       echo "Today is " . date("l jS \of F Y");
@@ -35,24 +35,15 @@
       echo "The time is " . date("h:i A");
     },
 
-    "are you married" => function ($value) {
-      echo "I am if you want me to be";
-    },
+    "are you married" => regularResponse("I am if you want me to be"),
 
-    "can you feel" => function ($value) {
-      echo "I am a form of Artifical Intellegence so NO";
-    },
-    "what's your life story" => function ($value) {
-      echo "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)";
-    },
+    "can you feel" => regularResponse("I am a form of Artifical Intellegence so NO"),
 
-    "who is your father" => function ($value) {
-      echo "Hey no need to judge";
-    }
+    "what's your life story" => regularResponse("i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)"),
+
+    "who is your father" => regularResponse("Hey no need to judge"),
 
   );
-
-
 
   foreach($functionKeys as $key => $value){
     if(strpos($input, $key) !== false){
