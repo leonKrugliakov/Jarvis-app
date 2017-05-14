@@ -5,11 +5,22 @@
 
   $input = $_POST["input"];
 
-  $functionKeys = array("weather" => tellWeather(), "what is" => lookUp($input), "define" => defineWord($input),
-  "Hello" => "Top of the morning to ya", "today's date" => function(){ return "Today is " . date("l jS \of F Y");},
-  "what time is it" => function(){ return "The time is " . date("h:i A");}, "are you married" => "I am if you want me to be",
-  "can you feel" => "I am a form of Artifical Intellegence so NO", "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
-  "who is your father" => "Hey no need to judge");
+  $functionKeys = array(
+    "weather" => tellWeather(),
+    "what is" => lookUp($input),
+    "define" => defineWord($input),
+    "Hello" => "Top of the morning to ya",
+    "today's date" => function(){
+      return "Today is " . date("l jS \of F Y");
+    },
+
+    "what time is it" => function(){
+      return "The time is " . date("h:i A");},
+
+    "are you married" => "I am if you want me to be",
+    "can you feel" => "I am a form of Artifical Intellegence so NO", "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
+    "who is your father" => "Hey no need to judge"
+  );
 
   foreach($functionKeys as $key){
     if(strpos($input, $key) !== false){
