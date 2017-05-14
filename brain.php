@@ -94,11 +94,11 @@
     echo $json[0]->text;
   }
 
-  function calculate($dog){
-    $start = strpos($dog, "calculate ") + 10;
-    $input = substr($dog, $start, strlen($dog));
+  function calculate($value){
+    $start = strpos($value, "calculate ") + 10;
+    $input = substr($value, $start, strlen($value));
     echo $input . "<br />";
-    if (preg_match("/^[0-9*#+]+$/", trim($input, " "))){
+    if (preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*\/])\s*((?:\s[-+])?\d+)\s*)+$/", trim($input, " "))){
       $output = eval("echo " . $input . ";");
     }else{
       echo "You entered an invalid input";
