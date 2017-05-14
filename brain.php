@@ -5,14 +5,20 @@
 
   $input = $_POST["input"];
 
-  $functionKeys = array("weather" => tellWeather(), "what is" => lookUp($input), "define" => defineWord($input),
-  "Hello" => "Top of the morning to ya", "today's date" => function(){ return "Today is " . date("l jS \of F Y");},
-  "what time is it" => function(){ return "The time is " . date("h:i A");}, "are you married" => "I am if you want me to be",
-  "can you feel" => "I am a form of Artifical Intellegence so NO", "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
+  $functionKeys = array(
+  "weather" => tellWeather(),
+  "what is" => lookUp($input),
+  "define" => defineWord($input),
+  "Hello" => "Top of the morning to ya",
+  "today's date" => function(){ return "Today is " . date("l jS \of F Y");},
+  "what time is it" => function(){ return "The time is " . date("h:i A");},
+  "are you married" => "I am if you want me to be",
+  "can you feel" => "I am a form of Artifical Intellegence so NO",
+  "what's your life story" => "i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)",
   "who is your father" => "Hey no need to judge");
 
   foreach($functionKeys as $key){
-    if(strpos($input, $key) !== false){
+    if(strpos($input, settype($key, "string") !== false)){
       $functionKeys[$key];
     }
   }
@@ -31,24 +37,19 @@
   }
 
   function lookup($input){
-    $input = $input;
     $start = strpos($input, "what is ") + 8;
     $item = substr($input, $start, strlen($input));
     $askArray = explode(" ", $item);
     $finalThing = "";
-
     for($i = 0; $i < sizeof($askArray); $i++){
       $finalThing = $askArray[$i] . "+";
     }
-
-
     $jsonurl="https://en.wikipedia.org/w/api.php?action=opensearch&search=" . $finalThing . "&limit=1&namespace=0&format=json";
     $json = file_get_contents($jsonurl);
     //echo $json . "<br /><br />";
     $lookedUpInfo = explode(']', $json);
     $lookedUpInfo = $lookedUpInfo[1];
     $lookedUpInfo = substr($lookedUpInfo, 3, (strlen($lookedUpInfo)-4));
-
     echo $lookedUpInfo;
   }
 
@@ -58,6 +59,20 @@
     $json = file_get_contents($thing);
     $json = json_decode($json);
     echo $json[0]->text;
+  }
+
+  $dog = "calculate (7 + 3) / 2 * 8 - 9";
+
+  function calculate($dog){
+    $start = strpos($dog "calculate ") + 10;
+    $input = substr($dog, $start, strlen($dog));
+    for($i = 0; $i < strlen($input); $i++){
+      if(gettype($input[$i]) === "string"){
+        echo "You entered an invalid input";
+      }else{
+        $output = eval($input);
+      }
+    }
   }
 
 ?>
