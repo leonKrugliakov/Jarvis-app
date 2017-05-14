@@ -25,6 +25,10 @@
       echo defineWord($input);
     },
 
+    "calculate" => function($input){
+      echo calculate($input);
+    },
+
     "Hello" => regularResponse("Top of the morning to ya"),
 
     "today's date" => function ($value) {
@@ -90,17 +94,14 @@
     echo $json[0]->text;
   }
 
-  $dog = "calculate (7 + 3) / 2 * 8 - 9";
-
   function calculate($dog){
-    $start = strpos($dog "calculate ") + 10;
+    $start = strpos($dog, "calculate ") + 10;
     $input = substr($dog, $start, strlen($dog));
-    for($i = 0; $i < strlen($input); $i++){
-      if(gettype($input[$i]) === "string"){
-        echo "You entered an invalid input";
-      }else{
-        $output = eval($input);
-      }
+    echo $input . "<br />";
+    if (preg_match("/^[0-9*#+]+$/", trim($input, " "))){
+      $output = eval("echo " . $input . ";");
+    }else{
+      echo "You entered an invalid input";
     }
   }
 
