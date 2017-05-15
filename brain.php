@@ -98,7 +98,7 @@
     $start = strpos($value, "calculate ") + 10;
     $input = substr($value, $start, strlen($value));
     echo $input . "<br />";
-    if (preg_match("/^\s*([-+]?)(\d+)(?:\s*([-+*\/])\s*((?:\s[-+])?\d+)\s*)+$/", trim($input, " "))){
+    if (preg_match("/^\s*([-+\(\)]?)(\d+)(?:\s*([-+)(*\/])\s*((?:\s[-+)()])?\d+)\s*)+$/", trim($input, " ")) || strpos($input, '(') !== false || strpos($input, ')') !== false){
       $output = eval("echo " . $input . ";");
     }else{
       echo "You entered an invalid input";
