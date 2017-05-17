@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYngkuESFSn8WI_0gCWfsB9e2f3xvaj30&libraries=places"></script>
 
+
 <?php
 
   $input = $_POST["input"];
@@ -27,6 +28,10 @@
 
     "calculate" => function($input){
       echo calculate($input);
+    },
+
+    "translate" => function($input){
+      echo translate($input);
     },
 
     "Hello" => regularResponse("Top of the morning to ya"),
@@ -79,10 +84,10 @@
     }
     $jsonurl="https://en.wikipedia.org/w/api.php?action=opensearch&search=" . $finalThing . "&limit=1&namespace=0&format=json";
     $json = file_get_contents($jsonurl);
-    //echo $json . "<br /><br />";
-    $lookedUpInfo = explode(']', $json);
-    $lookedUpInfo = $lookedUpInfo[1];
-    $lookedUpInfo = substr($lookedUpInfo, 3, (strlen($lookedUpInfo)-4));
+    $lookedUpInfo = json_decode($json);
+
+    $lookedUpInfo = $lookedUpInfo[2][0];
+    //echo $lookedUpInfo . "<br /><br />";
     echo $lookedUpInfo;
   }
 
@@ -103,6 +108,54 @@
     }else{
       echo "You entered an invalid input";
     }
+  }
+
+  function translate($input){
+    $strippedInput = substr($input, (strpos($input, "translate") + 10));
+
+    echo $strippedInput . "<br /><br />";
+
+    $langFrom = substr($input, (strpos($input, "from") + 5), 2);
+
+    echo $langFrom . "<br /><br />";
+
+    $langTo = substr($input, (strpos($input, "to") + 3));
+
+    echo $langTo . "<br /><br />";
+
+    echo "
+      <script>
+        const translate = require('google-translate-api');
+
+        translate('Ik spreek Engels', {to: 'en'}).then(res => {
+          console.log(res.text);
+          //=> I speak English
+          console.log(res.from.language.iso);
+          //=> nl
+        }).catch(err => {
+          console.error(err);
+        });
+
+
+        translate('I spea Dutch!', {from: 'en', to: 'nl'}).then(res => {
+            console.log(res.text);
+            //=> Ik spreek Nederlands!
+            console.log(res.from.text.autoCorrected);
+            //=> true
+            console.log(res.from.text.value);
+            //=> I [speak] Dutch!
+            console.log(res.from.text.didYouMean);
+            //=> false
+        }).catch(err => {
+            console.error(err);
+        });
+      </script>
+
+
+
+    ";
+
+
   }
 
 ?>
