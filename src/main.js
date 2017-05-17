@@ -1,18 +1,24 @@
+function outputMessage(message) {
+  $("#output").text(message);
+}
+
+
 $(document).ready(function () {
 
-  $("#searchButton").click (function () {
+  $("#searchForm").submit(function (e) {
+    e.preventDefault();
 
     var inputstring = $("#searchInput").val();
-
+    
     $.ajax({
       type: "POST",
       url: "./brain.php",
       data: {"input": inputstring},
-      success: function (data) {
-        console.log(data);
-      }
+    }).done (function (data) {
+      outputMessage(data);
     })
-
   });
+
+
 
 });

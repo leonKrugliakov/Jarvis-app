@@ -1,9 +1,8 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYngkuESFSn8WI_0gCWfsB9e2f3xvaj30&libraries=places"></script>
-
 <?php
 
-  $input = $_POST["input"];
+  $input = strtolower($_POST["input"]);
+
+
 
   function regularResponse($message) {
 
@@ -29,7 +28,7 @@
       echo calculate($input);
     },
 
-    "Hello" => regularResponse("Top of the morning to ya"),
+    "hello" => regularResponse("Top of the morning to ya"),
 
     "today's date" => function ($value) {
       echo "Today is " . date("l jS \of F Y");
@@ -104,5 +103,4 @@
       echo "You entered an invalid input";
     }
   }
-
 ?>

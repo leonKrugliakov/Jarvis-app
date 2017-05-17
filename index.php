@@ -31,19 +31,14 @@
 
       <div class = "text-center">
 
-             <!--<form method="POST" action="brain.php">
-               <input type="text" name="input" class="form-control searchTerm" placeholder="Ask me Anything..." />
+             <form method = "post" action = "" id = "searchForm">
+               <input id = "searchInput" type="text" name="input" class="form-control searchTerm" placeholder="Ask me Anything..." />
                <input id = "searchButton" type="submit" class="btn btn-primary searchButton" />
-             </form>-->
-
-             <input id = "searchInput" type="text" name="input" class="form-control searchTerm" placeholder="Ask me Anything..." />
-             <input id = "searchButton" type="submit" class="btn btn-primary searchButton" />
-
+             </form>
 
       </div>
 
-      <p id = "output"></p>
-
+      <b><p class = "text-center" id = "output"></p></b>
 
     </div>
 
