@@ -25,6 +25,7 @@ $(document).ready(function () {
       url: "./brain.php",
       data: {"input": inputstring},
     }).done (function (data) {
+      console.log(data);
       outputMessage(data);
       speekMessage(data);
     })
