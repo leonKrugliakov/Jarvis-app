@@ -1,10 +1,12 @@
+<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYngkuESFSn8WI_0gCWfsB9e2f3xvaj30&libraries=places"></script>
 
-
 <?php
 
-  $input = $_POST["input"];
+  $input = strtolower($_POST["input"]);
+
+
 
   function regularResponse($message) {
 
@@ -109,7 +111,6 @@
       echo "You entered an invalid input";
     }
   }
-
   function translate($input){
     $strippedInput = substr($input, (strpos($input, "translate") + 10));
 
