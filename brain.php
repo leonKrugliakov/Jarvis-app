@@ -100,23 +100,27 @@ function calculate($value){
 }
 
   function translate($input){
-    if (preg_match_all("/(?<=translate )(.*?)(?= to)/s", $input, $result))
+    if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
       for ($i = 1; count($result) > $i; $i++) {
           $strippedInput = $result[$i][0];
     }
-    echo urlencode($strippedInput) . "      ";
-    $langTo = ucfirst(substr($input, (strpos($input, "to") + 3)));
+    //echo urlencode($strippedInput) . "      ";
     $json= file_get_contents("http://www.transltr.org/api/getlanguagesfortranslate") or die("Error: Cannot create object");
     $json = json_decode($json);
+
+    $langCode = "";
+    $langTo = "";
+
     for($i = 0; $i < count($json); $i++){
-      if($json[$i]->languageName === $langTo){
+      if(strpos(ucwords($input), $json[$i]->languageName) !== false){
         $langCode = $json[$i]->languageCode;
+        $langTo = $json[$i]->languageName;
       }
     }
-    $translated = file_get_contents("http://www.transltr.org/api/translate?text=" . urlencode($strippedInput) ."&to=ru");
+
+    $translated = file_get_contents("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170515T040121Z.de6ac212a5c4eb10.bc06fb92bb4de8f21363bea037ca320aef2aea46&text=" . urlencode($strippedInput) . "&lang=" . $langCode . "&[format=plain]&[options=0]&[callback=]");
     $translated = json_decode($translated);
-    $translated = $translated->translationText;
-    print_r($translated);
+     echo $strippedInput . " in " . $langTo . " is " . $translated->text[0];
 }
 
 ?>
