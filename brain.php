@@ -11,7 +11,7 @@
   }
 
   $functionKeys = array(
-    "weather" => function ($input) {
+    "the weather" => function ($input) {
         echo tellWeather();
     },
     "what is" => function ($in) {
@@ -28,6 +28,10 @@
 
     "translate" => function ($input) {
       echo translate($input);
+    },
+
+    "play" => function($input){
+      echo music($input);
     },
 
     "hello" => regularResponse("Top of the morning to ya"),
@@ -99,28 +103,47 @@ function calculate($value){
   }
 }
 
-  function translate($input){
-    if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
-      for ($i = 1; count($result) > $i; $i++) {
-          $strippedInput = $result[$i][0];
+function translate($input){
+  if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
+    for ($i = 1; count($result) > $i; $i++) {
+        $strippedInput = $result[$i][0];
+  }
+
+  $json= file_get_contents("http://www.transltr.org/api/getlanguagesfortranslate") or die("Error: Cannot create object");
+  $json = json_decode($json);
+
+  $langCode = "";
+  $langTo = "";
+
+  for($i = 0; $i < count($json); $i++){
+    if(strpos(ucwords($input), $json[$i]->languageName) !== false){
+      $langCode = $json[$i]->languageCode;
+      $langTo = $json[$i]->languageName;
     }
-    //echo urlencode($strippedInput) . "      ";
-    $json= file_get_contents("http://www.transltr.org/api/getlanguagesfortranslate") or die("Error: Cannot create object");
-    $json = json_decode($json);
+  }
 
-    $langCode = "";
-    $langTo = "";
+  $translated = file_get_contents("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170515T040121Z.de6ac212a5c4eb10.bc06fb92bb4de8f21363bea037ca320aef2aea46&text=" . urlencode($strippedInput) . "&lang=" . $langCode . "&[format=plain]&[options=0]&[callback=]");
+  $translated = json_decode($translated);
+  echo $strippedInput . " in " . $langTo . " is " . $translated->text[0];
+}
 
-    for($i = 0; $i < count($json); $i++){
-      if(strpos(ucwords($input), $json[$i]->languageName) !== false){
-        $langCode = $json[$i]->languageCode;
-        $langTo = $json[$i]->languageName;
-      }
-    }
+function music($input){
+  $start = strpos($input, "play ") + 5;
+  $item = substr($input, $start, strlen($input));
+  $searchString = $item;
+  $correctString = str_replace(" ","+",$searchString);
+  $youtubeUrl = "https://www.youtube.com/results?search_query=". $correctString;
+  $getHTML = file_get_contents($youtubeUrl);
+  $pattern = '/<a href="\/watch\?v=(.*?)"/i';
 
-    $translated = file_get_contents("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170515T040121Z.de6ac212a5c4eb10.bc06fb92bb4de8f21363bea037ca320aef2aea46&text=" . urlencode($strippedInput) . "&lang=" . $langCode . "&[format=plain]&[options=0]&[callback=]");
-    $translated = json_decode($translated);
-     echo $strippedInput . " in " . $langTo . " is " . $translated->text[0];
+  if(preg_match($pattern, $getHTML, $match)){
+    $videoID = $match[1];
+  } else {
+    echo "Something went wrong!";
+    exit;
+  }
+
+  echo '<iframe width="560" height="315" src="//www.youtube.com/embed/'. $videoID .'" frameborder="0" allowfullscreen></iframe>';
 }
 
 ?>
