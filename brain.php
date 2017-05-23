@@ -103,6 +103,9 @@ function calculate($value){
 }
 
 function translate($input){
+
+  //TODO put a example syntax
+
   if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
     for ($i = 1; count($result) > $i; $i++) {
         $strippedInput = $result[$i][0];
