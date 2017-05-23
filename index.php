@@ -38,9 +38,10 @@
 
       </div>
 
-      <b><p class = "text-center" id = "output"></p></b>
+      <b><div class = "text-center" id = "output"><h1></h1></div></b>
 
     </div>
+
 
 </body>
 

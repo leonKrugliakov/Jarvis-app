@@ -3,7 +3,6 @@
   $input = strtolower($_POST["input"]);
 
   function regularResponse($message) {
-
     return function($value) use ($message) {
       echo $message;
     };
@@ -12,7 +11,7 @@
 
   $functionKeys = array(
     "the weather" => function ($input) {
-        echo tellWeather();
+      echo tellWeather();
     },
     "what is" => function ($in) {
       echo lookUp($in);
@@ -143,7 +142,7 @@ function music($input){
     exit;
   }
 
-  echo '<iframe width="560" height="315" src="//www.youtube.com/embed/'. $videoID .'" frameborder="0" allowfullscreen></iframe>';
+  return("<iframe width=\"560\" height=\"315\" src=\"//www.youtube.com/embed/" . $videoID ."?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>");
 }
 
 ?>
