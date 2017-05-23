@@ -12,6 +12,14 @@ function speekMessage(message) {
   }
 }
 
+function stopSpeek() {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }else {
+    console.log("unable to use speech synth");
+  }
+}
+
 $(document).ready(function () {
   $("#searchForm").submit(function (e) {
     e.preventDefault();
@@ -23,10 +31,14 @@ $(document).ready(function () {
     }).done (function (data) {
       console.log(data);
 
-      outputMessage(data);
+      if (data.includes("stop voice") == false) {
+        outputMessage(data);
 
-      if (data.includes("<iframe>") == false) {
-        speekMessage(data);
+        if (data.includes("<iframe>") == false) {
+          speekMessage(data);
+        }
+      }else {
+        stopSpeek();
       }
 
     })

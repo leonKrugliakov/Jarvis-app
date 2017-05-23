@@ -43,6 +43,18 @@
       echo "The time is " . date("h:i A");
     },
 
+    "memes" => function ($value) {
+      $json = file_get_contents("./keys.json");
+      $keys = json_decode($json);
+
+      echo $keys->googlemaps;
+    },
+
+    "stop" => function ($value) {
+      echo "stop voice";
+    },
+
+
     "are you married" => regularResponse("I am if you want me to be"),
 
     "can you feel" => regularResponse("I am a form of Artifical Intellegence so NO"),
