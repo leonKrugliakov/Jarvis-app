@@ -22,8 +22,13 @@ $(document).ready(function () {
       data: {"input": inputstring},
     }).done (function (data) {
       console.log(data);
+
       outputMessage(data);
-      speekMessage(data);
+
+      if (data.includes("<iframe>") == false) {
+        speekMessage(data);
+      }
+
     })
   });
 });
