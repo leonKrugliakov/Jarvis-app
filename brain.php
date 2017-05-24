@@ -1,6 +1,10 @@
 <?php
 
   $input = strtolower($_POST["input"]);
+  $location = $_POST["location"];
+
+
+
 
   function regularResponse($message) {
     return function($value) use ($message) {
@@ -43,17 +47,17 @@
       echo "The time is " . date("h:i A");
     },
 
-    "memes" => function ($value) {
-      $json = file_get_contents("./keys.json");
-      $keys = json_decode($json);
-
-      echo $keys->googlemaps;
+    "where am i" => function ($value) use ($location) {
+      findPerson($location);
     },
 
     "stop" => function ($value) {
       echo "stop voice";
     },
 
+    "location" => function ($value) use ($location) {
+      echo $location[latitude] . "," . $location[longitude];
+    },
 
     "are you married" => regularResponse("I am if you want me to be"),
 
@@ -70,6 +74,20 @@ foreach($functionKeys as $key => $value){
     $functionKeys[$key]($input);
   }
 };
+
+function findPerson($location) {
+  $json = file_get_contents("./keys.json");
+  $keys = json_decode($json);
+  $googlekey = $keys->googlemaps;
+  $request = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='. $location[latitude] .','. $location[longitude] .'&sensor=false&location_type=ROOFTOP&result_type=street_address&key='. $keys->googlemaps;
+
+  $loco = file_get_contents($request);
+  $yourloco = json_decode($loco)->results[0]->formatted_address;
+  echo "Your location is " . $yourloco;
+
+}
+
+
 function tellWeather(){
     $jsonurl = "http://api.openweathermap.org/data/2.5/weather?zip=63146&units=metric&APPID=ce0de60baf27ac825921e85bc1d23a9a";
     $json = file_get_contents($jsonurl);
@@ -117,6 +135,7 @@ function calculate($value){
 function translate($input){
 
   //TODO put a example syntax
+  // Translate (language) into (language)
 
   if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
     for ($i = 1; count($result) > $i; $i++) {
