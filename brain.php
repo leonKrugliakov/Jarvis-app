@@ -1,17 +1,11 @@
 <?php
 
+  //Imports
+  require('location.php');
+  require('utils.php');
+
   $input = strtolower($_POST["input"]);
   $location = $_POST["location"];
-
-
-
-
-  function regularResponse($message) {
-    return function($value) use ($message) {
-      echo $message;
-    };
-
-  }
 
   $functionKeys = array(
     "the weather" => function ($input) {
@@ -51,6 +45,10 @@
       findPerson($location);
     },
 
+    "where is" => function ($value) {
+      findLocation($value);
+    },
+
     "stop" => function ($value) {
       echo "stop voice";
     },
@@ -75,17 +73,6 @@ foreach($functionKeys as $key => $value){
   }
 };
 
-function findPerson($location) {
-  $json = file_get_contents("./keys.json");
-  $keys = json_decode($json);
-  $googlekey = $keys->googlemaps;
-  $request = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='. $location[latitude] .','. $location[longitude] .'&sensor=false&location_type=ROOFTOP&result_type=street_address&key='. $keys->googlemaps;
-
-  $loco = file_get_contents($request);
-  $yourloco = json_decode($loco)->results[0]->formatted_address;
-  echo "Your location is " . $yourloco;
-
-}
 
 
 function tellWeather(){
@@ -99,6 +86,7 @@ function tellWeather(){
     $max_tempC = $weather->main->temp_max;
     echo "The current temperature in ".$station." is " . $tempC . "C at this moment.";
 }
+
 function lookup($input){
   $start = strpos($input, "what is ") + 8;
   $item = substr($input, $start, strlen($input));
