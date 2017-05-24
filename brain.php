@@ -31,7 +31,9 @@
       echo music($input);
     },
 
-    "hello" => regularResponse("Top of the morning to ya"),
+    "tell me the news" => function($input){
+      echo news($input);
+    },
 
     "today's date" => function ($value) {
       echo "Today is " . date("l jS \of F Y");
@@ -56,6 +58,8 @@
     "location" => function ($value) use ($location) {
       echo $location[latitude] . "," . $location[longitude];
     },
+
+    "hello" => regularResponse("Top of the morning to ya"),
 
     "are you married" => regularResponse("I am if you want me to be"),
 
@@ -165,6 +169,149 @@ function music($input){
   }
 
   return("<iframe width=\"560\" height=\"315\" src=\"//www.youtube.com/embed/" . $videoID ."?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>");
+}
+
+function news($input){
+  $sources = array("abc-news-au", "bbc-news", "bloomberg", "business-insider", "cnbc", "cnn", "daily-mail", "espn", "financial-times",
+  "google-news", "hacker-news", "independent", "national-geographic", "techcrunch", "the-economist", "the-guardian-uk",
+  "the-new-york-times", "the-next-web", "the-telegraph", "the-wall-street-journal", "the-washington-post", "time", "usa-today");
+  $random = rand(0, count($sources));
+  $news = file_get_contents("https://newsapi.org/v1/articles?source=" . $sources[$random] . "&apiKey=38736fedc4b0460fafc18e3d9b26d00a");
+  $news = json_decode($news);
+  //print_r($news);
+  $source = explode("-", $news->source);
+  $sourceTitle = "";
+  for($i = 0; $i < count($source); $i++){
+    $sourceTitle = $sourceTitle . ucfirst($source[$i]) . " ";
+  }
+
+  echo "
+
+    <table class='table table-striped table-bordered'>
+      <tr>
+        <th>
+          Source:
+          " . $sourceTitle . "
+        </th>
+      </tr>
+      <thead class='thead-inverse'>
+        <tr>
+          <th>
+            Title:
+          </th>
+          <th>
+            Description:
+          </th>
+          <th>
+            Link:
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            " . $news->articles[0]->title . "
+          </td>
+          <td>
+            " . $news->articles[0]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[0]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[1]->title . "
+          </td>
+          <td>
+            " . $news->articles[1]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[1]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[2]->title . "
+          </td>
+          <td>
+            " . $news->articles[2]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[2]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[3]->title . "
+          </td>
+          <td>
+            " . $news->articles[3]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[3]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[4]->title . "
+          </td>
+          <td>
+            " . $news->articles[4]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[4]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[5]->title . "
+          </td>
+          <td>
+            " . $news->articles[5]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[5]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[6]->title . "
+          </td>
+          <td>
+            " . $news->articles[6]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[6]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[7]->title . "
+          </td>
+          <td>
+            " . $news->articles[7]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[7]->url . ">Full article</a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            " . $news->articles[8]->title . "
+          </td>
+          <td>
+            " . $news->articles[8]->description . "
+          </td>
+          <td>
+            <a href=" . $news->articles[8]->url . ">Full article</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  ";
+
 }
 
 ?>
