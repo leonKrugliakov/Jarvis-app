@@ -4,10 +4,18 @@
   require('location.php');
   require('utils.php');
 
+  require('infrastructure.php');
+
   $input = strtolower($_POST["input"]);
   $location = $_POST["location"];
 
   $functionKeys = array(
+
+    //Test functionKeys
+    "test" => function ($input) {
+        sendMessage("this is a test");
+    },
+
     "the weather" => function ($input) {
       echo tellWeather();
     },
