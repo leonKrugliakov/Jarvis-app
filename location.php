@@ -16,7 +16,7 @@ function findPerson($location) {
 
   $loco = file_get_contents($request);
   $yourloco = json_decode($loco)->results[0]->formatted_address;
-  echo "Your location is " . $yourloco;
+  return "Your location is " . $yourloco;
 
 }
 
@@ -41,7 +41,7 @@ function findLocation($input) {
 
   $message = "You are located at " . $latitude . " latitude and " . $longitude . " longitude.";
 
-  echo $message;
+  return $message;
 
 }
 

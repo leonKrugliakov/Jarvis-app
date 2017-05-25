@@ -43,17 +43,42 @@ function submitData(input_data) {
 
   var inputstring = input_data.inputstring;
   var location = input_data.location;
-  console.log(location);
 
   $.ajax({
     type: "POST",
     url: "./brain.php",
     data: {"input": inputstring, "location": location},
   }).done (function (data) {
+
     console.log(data);
 
+    var json_data = JSON.parse(data);
 
-    if (data.includes("stop voice") == false) {
+    switch (json_data.type){
+      case "message":
+        outputMessage(json_data.message);
+        speekMessage(json_data.message);
+        break;
+      case "command":
+
+        //DEBUG
+        console.log("command: " + json_data.command);
+
+        if (json_data.command == "stop") {
+          stopSpeek();
+        }
+
+        break;
+
+
+      default:
+        console.log("I dunno");
+    }
+
+
+
+
+    /**if (data.includes("stop voice") == false) {
       outputMessage(data);
 
       if (data.includes("<iframe>") == false) {
@@ -61,7 +86,7 @@ function submitData(input_data) {
       }
     }else {
       stopSpeek();
-    }
+    }**/
 
   })
 }

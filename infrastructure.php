@@ -1,5 +1,11 @@
 <?php
 
+function returnData($data) {
+  $json_data = json_encode($data);
+  echo $json_data;
+}
+
+
 function sendMessage($message) {
 
   $data = array(
@@ -7,9 +13,30 @@ function sendMessage($message) {
     "message" => $message
   );
 
-  $json_data = json_encode($data);
+  echo returnData($data);
 
-  echo $json_data;
+}
+
+function sendWrappedMessage($message) {
+
+  return function() use ($message) {
+    sendMessage($message);
+  };
+
+}
+
+function sendWMessage($message) {
+  return sendWrappedMessage($message);
+}
+
+
+function sendCommand($command) {
+  $data = array(
+    "type" => "command",
+    "command" => $command
+  );
+
+  echo returnData($data);
 
 }
 
@@ -20,8 +47,7 @@ function sendHtml($html) {
     "html" => $html
   );
 
-  $json_data = json_encode($data);
-  echo $json_data;
+  echo returnData($data);
 
 }
 

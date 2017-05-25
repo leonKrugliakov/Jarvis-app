@@ -13,26 +13,26 @@
 
     //Test functionKeys
     "test" => function ($input) {
-        sendMessage("this is a test");
+      sendMessage("this is a test");
     },
 
     "the weather" => function ($input) {
-      echo tellWeather();
+      sendMessage(tellWeather());
     },
     "what is" => function ($in) {
-      echo lookUp($in);
+      sendMessage(lookUp($in));
     },
 
     "define" => function ($input) {
-      echo defineWord($input);
+      sendMessage(defineWord($input));
     },
 
     "calculate" => function($input){
-      echo calculate($input);
+      sendMessage(calculate($input));
     },
 
     "translate" => function ($input) {
-      echo translate($input);
+      sendMessage(translate($input));
     },
 
     "play" => function($input){
@@ -44,38 +44,38 @@
     },
 
     "today's date" => function ($value) {
-      echo "Today is " . date("l jS \of F Y");
+      sendMessage("Today is " . date("l jS \of F Y"));
     },
 
     "what time is it" => function($value){
-      echo "The time is " . date("h:i A");
+      sendMessage("The time is " . date("h:i A"));
     },
 
     "where am i" => function ($value) use ($location) {
-      findPerson($location);
+      sendMessage(findPerson($location));
     },
 
     "where is" => function ($value) {
-      findLocation($value);
+      sendMessage(findLocation($value));
     },
 
     "stop" => function ($value) {
-      echo "stop voice";
+      sendCommand("stop");
     },
 
     "location" => function ($value) use ($location) {
-      echo $location[latitude] . "," . $location[longitude];
+      sendMessage($location[latitude] . "," . $location[longitude]);
     },
 
-    "hello" => regularResponse("Top of the morning to ya"),
+    "hello" => sendWMessage("Top of the morning to ya"),
 
-    "are you married" => regularResponse("I am if you want me to be"),
+    "are you married" => sendWMessage("I am if you want me to be"),
 
-    "can you feel" => regularResponse("I am a form of Artifical Intellegence so NO"),
+    "can you feel" => sendWMessage("I am a form of Artifical Intellegence so NO"),
 
-    "what's your life story" => regularResponse("i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)"),
+    "what's your life story" => sendWMessage("i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)"),
 
-    "who is your father" => regularResponse("Hey no need to judge"),
+    "who is your father" => sendWMessage("Hey no need to judge"),
 
   );
 

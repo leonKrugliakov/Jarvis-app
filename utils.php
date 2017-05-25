@@ -1,8 +1,8 @@
 <?php
 
-function regularResponse($message) {
-  return function($value) use ($message) {
-    echo $message;
+function infra_wrapper($output) {
+  return function($value) use ($output) {
+    $output;
   };
 
 }
