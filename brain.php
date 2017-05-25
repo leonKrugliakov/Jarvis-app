@@ -1,40 +1,46 @@
 <?php
 
+  //Imports
+  require('location.php');
+  require('utils.php');
+
+  require('infrastructure.php');
+
   $input = strtolower($_POST["input"]);
-
-  function regularResponse($message) {
-    return function($value) use ($message) {
-      echo $message;
-    };
-
-  }
+  $location = $_POST["location"];
 
   $functionKeys = array(
+
+    //Test functionKeys
+    "test" => function ($input) {
+      sendMessage("this is a test");
+    },
+
     "the weather" => function ($input) {
-      echo tellWeather();
+      sendMessage(tellWeather());
     },
     "what is" => function ($in) {
-      echo lookUp($in);
+      sendMessage(lookUp($in));
     },
 
     "define" => function ($input) {
-      echo defineWord($input);
+      sendMessage(defineWord($input));
     },
 
     "calculate" => function($input){
-      echo calculate($input);
+      sendMessage(calculate($input));
     },
 
     "translate" => function ($input) {
-      echo translate($input);
+      sendMessage(translate($input));
     },
 
     "play" => function($input){
-      echo music($input);
+      sendHtml(music($input));
     },
 
     "tell me the news" => function($input){
-      echo news($input);
+      sendHtml(news($input));
     },
 
     "who is" => function($input){
@@ -46,22 +52,38 @@
     },
 
     "today's date" => function ($value) {
-      echo "Today is " . date("l jS \of F Y");
+      sendMessage("Today is " . date("l jS \of F Y"));
     },
 
     "what time is it" => function($value){
-      echo "The time is " . date("h:i A");
+      sendMessage("The time is " . date("h:i A"));
     },
 
-    "hello" => regularResponse("Top of the morning to ya"),
+    "where am i" => function ($value) use ($location) {
+      sendMessage(findPerson($location));
+    },
 
-    "are you married" => regularResponse("I am if you want me to be"),
+    "where is" => function ($value) {
+      sendMessage(findLocation($value));
+    },
 
-    "can you feel" => regularResponse("I am a form of Artifical Intellegence so NO"),
+    "stop" => function ($value) {
+      sendCommand("stop");
+    },
 
-    "what's your life story" => regularResponse("i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)"),
+    "location" => function ($value) use ($location) {
+      sendMessage($location[latitude] . "," . $location[longitude]);
+    },
 
-    "who is your father" => regularResponse("Hey no need to judge"),
+    "hello" => sendWMessage("Top of the morning to ya"),
+
+    "are you married" => sendWMessage("I am if you want me to be"),
+
+    "can you feel" => sendWMessage("I am a form of Artifical Intellegence so NO"),
+
+    "what's your life story" => sendWMessage("i was born in 2017 and now i serve you as your Virtual assistant, yay (sarcasm!)"),
+
+    "who is your father" => sendWMessage("Hey no need to judge"),
 
   );
 
@@ -70,6 +92,9 @@ foreach($functionKeys as $key => $value){
     $functionKeys[$key]($input);
   }
 };
+
+
+
 function tellWeather(){
     $jsonurl = "http://api.openweathermap.org/data/2.5/weather?zip=63146&units=metric&APPID=ce0de60baf27ac825921e85bc1d23a9a";
     $json = file_get_contents($jsonurl);
@@ -79,8 +104,9 @@ function tellWeather(){
     $tempC = $weather->main->temp;
     $min_tempC = $weather->main->temp_min;
     $max_tempC = $weather->main->temp_max;
-    echo "The current temperature in ".$station." is " . $tempC . "C at this moment.";
+    return "The current temperature in ".$station." is " . $tempC . "C at this moment.";
 }
+
 function lookup($input){
   $start = strpos($input, "what is ") + 8;
   $item = substr($input, $start, strlen($input));
@@ -103,20 +129,26 @@ function defineWord($input){
   $thing = "http://api.wordnik.com:80/v4/word.json/" . $input . "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=e4906f30d12a264c87b33d67db55b33fe87e268b94a52e08f";
   $json = file_get_contents($thing);
   $json = json_decode($json);
-  echo $json[0]->text;
+  return $json[0]->text;
 }
 function calculate($value){
   $start = strpos($value, "calculate ") + 10;
   $input = substr($value, $start, strlen($value));
-  echo $input . "=";
+
   if (preg_match("/^\s*([-+\(\)]?)(\d+)(?:\s*([-+)(*\/])\s*((?:\s[-+)()])?\d+)\s*)+$/", trim($input, " ")) || strpos($input, '(') !== false || strpos($input, ')') !== false){
-    $output = eval("echo " . $input . ";");
+    $output = eval('return ' .$input.';');
+    return $input . " = " .$output;
   }else{
-    echo "You entered an invalid input";
+    return "You entered an invalid input";
   }
 }
 
 function translate($input){
+
+
+  //TODO put a example syntax
+  // Translate (language) into (language)
+
   if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
     for ($i = 1; count($result) > $i; $i++) {
         $strippedInput = $result[$i][0];
@@ -137,7 +169,7 @@ function translate($input){
 
   $translated = file_get_contents("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170515T040121Z.de6ac212a5c4eb10.bc06fb92bb4de8f21363bea037ca320aef2aea46&text=" . urlencode($strippedInput) . "&lang=" . $langCode . "&[format=plain]&[options=0]&[callback=]");
   $translated = json_decode($translated);
-  echo $strippedInput . " in " . $langTo . " is " . $translated->text[0];
+  return $strippedInput . " in " . $langTo . " is " . $translated->text[0];
 }
 
 function music($input){
@@ -173,7 +205,7 @@ function news($input){
     $sourceTitle = $sourceTitle . ucfirst($source[$i]) . " ";
   }
 
-  echo "
+  return "
 
     <table class='table table-striped table-bordered'>
       <tr>
