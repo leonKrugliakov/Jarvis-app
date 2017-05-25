@@ -37,6 +37,14 @@
       echo news($input);
     },
 
+    "who is" => function($input){
+      echo bio($input);
+    },
+
+    "how to make " => function($input){
+      echo cook($input);
+    },
+
     "today's date" => function ($value) {
       echo "Today is " . date("l jS \of F Y");
     },
@@ -81,13 +89,15 @@ function lookup($input){
   for($i = 0; $i < sizeof($askArray); $i++){
     $finalThing = $askArray[$i] . "+";
   }
-  $jsonurl="https://en.wikipedia.org/w/api.php?action=opensearch&search=" . $finalThing . "&limit=1&namespace=0&format=json";
+  $jsonurl='http://en.wikipedia.org/w/api.php?action=query&prop=extracts|info&exintro&titles=' . $finalThing . '&format=json&explaintext&redirects&inprop=url&indexpageids';
   $json = file_get_contents($jsonurl);
-  $lookedUpInfo = json_decode($json);
-  $lookedUpInfo = $lookedUpInfo[2][0];
-  //echo $lookedUpInfo . "<br /><br />";
-  echo $lookedUpInfo;
+  $data = json_decode($json);
+
+  $pageid = $data->query->pageids[0];
+
+  print_r($data->query->pages->$pageid->extract);
 }
+
 function defineWord($input){
   $input = substr($input, (strpos($input, "define") + 7));
   $thing = "http://api.wordnik.com:80/v4/word.json/" . $input . "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=e4906f30d12a264c87b33d67db55b33fe87e268b94a52e08f";
@@ -107,9 +117,6 @@ function calculate($value){
 }
 
 function translate($input){
-
-  //TODO put a example syntax
-
   if (preg_match_all("/(?<=translate )(.*?)(?= into)/s", $input, $result))
     for ($i = 1; count($result) > $i; $i++) {
         $strippedInput = $result[$i][0];
@@ -292,7 +299,31 @@ function news($input){
     </table>
 
   ";
-
 }
+
+function bio($input){
+  $start = strpos($input, "who is ") + 7;
+  $input = substr($input, $start, strlen($input));
+  $lookUpString = str_replace(' ', '_', ucwords($input));
+
+  $url = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts|info&exintro&titles=' . $lookUpString . '&format=json&explaintext&redirects&inprop=url&indexpageids';
+
+  $json = file_get_contents($url);
+  $data = json_decode($json);
+
+  $pageid = $data->query->pageids[0];
+
+  print_r($data->query->pages->$pageid->extract);
+}
+
+function cook($input){
+  $start = strpos($input, "how to make ") + 12;
+  $input = substr($input, $start, strlen($input));
+  $lookUpString = str_replace(' ', '_', ucwords($input));
+
+  $url = file_get_contents("https://api.edamam.com/search?q=chicken&app_id=4e32f12b&app_key=044b8f09b8b4823187b6912b982a7805&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free");
+  print_r($url);
+}
+
 
 ?>
