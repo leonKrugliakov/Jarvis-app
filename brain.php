@@ -124,11 +124,12 @@ function defineWord($input){
 function calculate($value){
   $start = strpos($value, "calculate ") + 10;
   $input = substr($value, $start, strlen($value));
-  echo $input . "=";
+
   if (preg_match("/^\s*([-+\(\)]?)(\d+)(?:\s*([-+)(*\/])\s*((?:\s[-+)()])?\d+)\s*)+$/", trim($input, " ")) || strpos($input, '(') !== false || strpos($input, ')') !== false){
-    $output = eval("echo " . $input . ";");
+    $output = eval('return ' .$input.';');
+    return $input . " = " .$output;
   }else{
-    echo "You entered an invalid input";
+    return "You entered an invalid input";
   }
 }
 
