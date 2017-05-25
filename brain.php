@@ -36,11 +36,11 @@
     },
 
     "play" => function($input){
-      echo music($input);
+      sendHtml(music($input));
     },
 
     "tell me the news" => function($input){
-      echo news($input);
+      sendHtml(news($input));
     },
 
     "today's date" => function ($value) {
@@ -96,7 +96,7 @@ function tellWeather(){
     $tempC = $weather->main->temp;
     $min_tempC = $weather->main->temp_min;
     $max_tempC = $weather->main->temp_max;
-    echo "The current temperature in ".$station." is " . $tempC . "C at this moment.";
+    return "The current temperature in ".$station." is " . $tempC . "C at this moment.";
 }
 
 function lookup($input){
@@ -112,14 +112,14 @@ function lookup($input){
   $lookedUpInfo = json_decode($json);
   $lookedUpInfo = $lookedUpInfo[2][0];
   //echo $lookedUpInfo . "<br /><br />";
-  echo $lookedUpInfo;
+  return $lookedUpInfo;
 }
 function defineWord($input){
   $input = substr($input, (strpos($input, "define") + 7));
   $thing = "http://api.wordnik.com:80/v4/word.json/" . $input . "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=e4906f30d12a264c87b33d67db55b33fe87e268b94a52e08f";
   $json = file_get_contents($thing);
   $json = json_decode($json);
-  echo $json[0]->text;
+  return $json[0]->text;
 }
 function calculate($value){
   $start = strpos($value, "calculate ") + 10;
@@ -158,7 +158,7 @@ function translate($input){
 
   $translated = file_get_contents("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170515T040121Z.de6ac212a5c4eb10.bc06fb92bb4de8f21363bea037ca320aef2aea46&text=" . urlencode($strippedInput) . "&lang=" . $langCode . "&[format=plain]&[options=0]&[callback=]");
   $translated = json_decode($translated);
-  echo $strippedInput . " in " . $langTo . " is " . $translated->text[0];
+  return $strippedInput . " in " . $langTo . " is " . $translated->text[0];
 }
 
 function music($input){
@@ -194,7 +194,7 @@ function news($input){
     $sourceTitle = $sourceTitle . ucfirst($source[$i]) . " ";
   }
 
-  echo "
+  return "
 
     <table class='table table-striped table-bordered'>
       <tr>

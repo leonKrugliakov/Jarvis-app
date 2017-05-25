@@ -1,6 +1,10 @@
 function outputMessage(message) {
+  $("#output").val(message);
+}
+
+function outputHtmlMessage(html) {
   $("#output").html("");
-  $("#output").append(message);
+  $("#output").append(html);
 }
 
 function speekMessage(message) {
@@ -59,6 +63,10 @@ function submitData(input_data) {
         outputMessage(json_data.message);
         speekMessage(json_data.message);
         break;
+      case "html":
+        outputHtmlMessage(json_data.html);
+        break;
+
       case "command":
 
         //DEBUG
