@@ -24,8 +24,6 @@ function stopSpeek() {
   }
 }
 
-//TODO turn this into a promise
-
 function getLocation() {
 
   let locationPromise = new Promise((resolve, reject) => {
