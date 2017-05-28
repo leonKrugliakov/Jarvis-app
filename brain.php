@@ -44,11 +44,11 @@
     },
 
     "who is" => function($input){
-      echo bio($input);
+      sendMessage(bio($input));
     },
 
     "how to make " => function($input){
-      echo cook($input);
+      sendMessage(cook($input));
     },
 
     "today's date" => function ($value) {
@@ -121,7 +121,7 @@ function lookup($input){
 
   $pageid = $data->query->pageids[0];
 
-  print_r($data->query->pages->$pageid->extract);
+  return $data->query->pages->$pageid->extract;
 }
 
 function defineWord($input){
@@ -184,7 +184,7 @@ function music($input){
   if(preg_match($pattern, $getHTML, $match)){
     $videoID = $match[1];
   } else {
-    echo "Something went wrong!";
+    return "Something went wrong!";
     exit;
   }
 
@@ -345,7 +345,7 @@ function bio($input){
 
   $pageid = $data->query->pageids[0];
 
-  print_r($data->query->pages->$pageid->extract);
+  return $data->query->pages->$pageid->extract;
 }
 
 function cook($input){
@@ -354,7 +354,7 @@ function cook($input){
   $lookUpString = str_replace(' ', '_', ucwords($input));
 
   $url = file_get_contents("https://api.edamam.com/search?q=chicken&app_id=4e32f12b&app_key=044b8f09b8b4823187b6912b982a7805&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free");
-  print_r($url);
+  return ($url);
 }
 
 

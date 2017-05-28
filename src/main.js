@@ -52,12 +52,12 @@ function submitData(input_data) {
     data: {"input": inputstring, "location": location},
   }).done (function (data) {
 
-    console.log(data);
-
     var json_data = JSON.parse(data);
+    console.log(data);
 
     switch (json_data.type){
       case "message":
+        console.log(json_data.message);
         outputMessage(json_data.message);
         speekMessage(json_data.message);
         break;
@@ -80,7 +80,6 @@ function submitData(input_data) {
       default:
         console.log("I dunno");
     }
-
 
 
 
