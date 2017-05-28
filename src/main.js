@@ -1,5 +1,6 @@
 function outputMessage(message) {
-  $("#output").val(message);
+  $("#output").html("");
+  $("#output").append("<p>" + message + "</p>");
 }
 
 function outputHtmlMessage(html) {
@@ -57,7 +58,6 @@ function submitData(input_data) {
 
     switch (json_data.type){
       case "message":
-        console.log(json_data.message);
         outputMessage(json_data.message);
         speekMessage(json_data.message);
         break;
