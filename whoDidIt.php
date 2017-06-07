@@ -66,6 +66,10 @@
   </div>
 
   <div class="wrap">
+    <a href="index.php" style="text-decoration:none;color:black;background-color:white;" class="button">Go back</a>
+  </div>
+
+  <div class="wrap">
     <div class="facebook goof icon"><a href="https://www.facebook.com/leonchikyj" target="_blank"></a></div>
     <div class="twitter goof icon"><a href="https://twitter.com/MenofRevolution" target="_blank"></a></div>
     <div class="linkedin goof icon"><a href="https://www.linkedin.com/in/leon-krugliakov-6311b9132/" target="_blank"></a></div>

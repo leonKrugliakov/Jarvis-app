@@ -21,6 +21,15 @@
 
   <link rel = "stylesheet" type = "text/css" href = "style/main.css">
 
+  <style>
+    body{
+      background-color:white;
+    }
+    a{
+      text-decoration:none;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -47,8 +56,8 @@
       <a onclick="showCommands()" class="button">What can I do?</a>
     </div>
 
-    <div class="wrap">
-      <a href="whoDidIt.php" class="button">Who built me?</a>
+    <div class="wrap" style="margin-top:0;">
+      <a href="whoDidIt.php" class="button" style="text-decoration:none;color:black;margin-top:0;">Who built me?</a>
     </div>
 
 </body>
