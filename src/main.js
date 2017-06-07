@@ -8,6 +8,14 @@ function outputHtmlMessage(html) {
   $("#output").append(html);
 }
 
+function showCommands(){
+  var commands = ["tell me the weather - tells the weather \n", "what is ... - explains what ... is\n", "who is ... - explains who ... is\n",
+                   "define ... - gives you a definition of ...\n", "calculate x + y / z - calculate the math problem (cannot do complex functions such as square root or powers\n",
+                   "translate ... to ,,, - translates ... into the language ,,,\n", "play ... - plays the song ...\n", "today's date - returns today's date\n",
+                   "what time is it - returns the current time\n"];
+  alert(commands);
+}
+
 function speekMessage(message) {
   if ('speechSynthesis' in window) {
     var msg = new SpeechSynthesisUtterance(message);

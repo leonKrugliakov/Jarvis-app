@@ -43,6 +43,13 @@
 
     </div>
 
+    <div class="wrap">
+      <a onclick="showCommands()" class="button">What can I do?</a>
+    </div>
+
+    <div class="wrap">
+      <a href="whoDidIt.php" class="button">Who built me?</a>
+    </div>
 
 </body>
 

@@ -70,7 +70,7 @@
     "stop" => function ($value) {
       sendCommand("stop");
     },
-
+    
     "location" => function ($value) use ($location) {
       sendMessage($location[latitude] . "," . $location[longitude]);
     },
