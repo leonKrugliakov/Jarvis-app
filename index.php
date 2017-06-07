@@ -28,6 +28,11 @@
     a{
       text-decoration:none;
     }
+
+    p{
+      color:black;
+      font-size:15px;
+    }
   </style>
 
 </head>
