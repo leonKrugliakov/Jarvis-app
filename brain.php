@@ -75,6 +75,10 @@
       sendMessage($location[latitude] . "," . $location[longitude]);
     },
 
+    "convert" => function($input){
+      sendMessage(convert($input));
+    },
+
     "hello" => sendWMessage("Top of the morning to ya"),
 
     "are you married" => sendWMessage("I am if you want me to be"),
@@ -356,6 +360,10 @@ function cook($input){
   $url = file_get_contents("https://api.edamam.com/search?q=chicken&app_id=4e32f12b&app_key=044b8f09b8b4823187b6912b982a7805&from=0&to=3&calories=gte%20591,%20lte%20722&health=alcohol-free");
   return ($url);
 }
+
+  function convert($input){
+    $input;
+  }
 
 
 ?>
