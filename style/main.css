@@ -96,6 +96,17 @@ p {
   margin:auto;
 }
 
+#output{
+  padding-top:3em;
+  padding-bottom:2em;
+  margin-top:3em;
+}
+
+.paddedBottomed{
+  padding-bottom:3em;
+  margin-bottom:3em;
+}
+
 
 .wrap{
   margin: 0 auto;

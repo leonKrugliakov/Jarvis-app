@@ -44,7 +44,7 @@
         <img src="logo.png" class="img-fluid center-text"/>
       </div>
 
-      <div class = "text-center">
+      <div class = "text-center paddedBottomed">
 
              <form method = "post" action = "" id = "searchForm">
                <input id = "searchInput" type="text" name="input" class="form-control searchTerm" placeholder="Ask me Anything..." />
@@ -52,6 +52,7 @@
              </form>
 
       </div>
+      <br /><br />
 
       <b><div class = "text-center" id = "output"></div></b>
 

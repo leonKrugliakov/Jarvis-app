@@ -1,13 +1,11 @@
 <?php
 
   //Imports
-  require('location.php');
   require('utils.php');
 
   require('infrastructure.php');
 
   $input = strtolower($_POST["input"]);
-  $location = $_POST["location"];
 
   $functionKeys = array(
 
@@ -59,20 +57,12 @@
       sendMessage("The time is " . date("h:i A"));
     },
 
-    "where am i" => function ($value) use ($location) {
-      sendMessage(findPerson($location));
-    },
-
     "where is" => function ($value) {
       sendMessage(findLocation($value));
     },
 
     "stop" => function ($value) {
       sendCommand("stop");
-    },
-    
-    "location" => function ($value) use ($location) {
-      sendMessage($location[latitude] . "," . $location[longitude]);
     },
 
     "convert" => function($input){

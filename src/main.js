@@ -33,22 +33,6 @@ function stopSpeek() {
   }
 }
 
-function getLocation() {
-
-  let locationPromise = new Promise((resolve, reject) => {
-    if (navigator.geolocation) {
-      var pos = navigator.geolocation.getCurrentPosition(function (value) {
-        var loco = {"latitude": value.coords.latitude, "longitude": value.coords.longitude}
-        resolve(loco);
-      });
-    }else {
-      reject("geo location not usuable")
-    }
-  });
-
-  return locationPromise;
-
-}
 
 function submitData(input_data) {
 
@@ -58,7 +42,7 @@ function submitData(input_data) {
   $.ajax({
     type: "POST",
     url: "./brain.php",
-    data: {"input": inputstring, "location": location},
+    data: {"input": inputstring},
   }).done (function (data) {
 
     var json_data = JSON.parse(data);
@@ -110,16 +94,12 @@ $(document).ready(function () {
 
     var inputstring = $("#searchInput").val();
 
-    getLocation().then (function (location) {
-      var input_data = {"inputstring": inputstring,
-                        "location": location};
-      submitData(input_data)
-    }).catch (function (reason) {
-      var location = {"latitude": 0, "longitude": 0}
-      var input_data = {"inputstring": inputstring,
-                        "location": location};
-      console.log(reason);
-    });
+    var work = function () {
+      var input_data = {"inputstring": inputstring};
+      submitData(input_data);
+    };
+
+    work();
 
 
   });
