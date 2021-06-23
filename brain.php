@@ -175,12 +175,12 @@ function music($input){
   $getHTML = file_get_contents($youtubeUrl);
   $pattern = '/<a href="\/watch\?v=(.*?)"/i';
 
-  if(preg_match($pattern, $getHTML, $match)){
+  /*if(preg_match($pattern, $getHTML, $match)){
     $videoID = $match[1];
   } else {
     return "Something went wrong!";
     exit;
-  }
+  }*/
 
   return("<iframe width=\"560\" height=\"315\" src=\"//www.youtube.com/embed/" . $videoID ."?autoplay=1\" frameborder=\"0\" allowfullscreen></iframe>");
 }

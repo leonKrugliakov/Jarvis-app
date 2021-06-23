@@ -59,7 +59,18 @@
     </div>
 
     <div class="wrap">
-      <a onclick="showCommands()" class="button">What can I do?</a>
+        <div>
+            <h3>What can I do?</h3>
+            <ul>
+                <li>tell me the weather - tells the current weather in St. Louis</li>
+                <li>what is ... - explains what ... is</li>
+                <li>who is ... - explains who ... is</li>
+                <li>calculate x + y / z - calculate the math problem (cannot do complex functions such as square root or powers)</li>
+                <li>play ... - plays the song ...</li>
+                <li>today's date - returns today's date</li>
+                <li>what time is it - returns the current time</li>
+            </ul>
+        </div>
     </div>
 
     <div class="wrap" style="margin-top:0;">
